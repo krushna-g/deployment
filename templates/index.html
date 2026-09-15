@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terminal DB View</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="terminal-box">
+        <div class="terminal-header">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+            <span class="title">Database_Terminal_v1.0.exe</span>
+        </div>
+        
+        <div class="terminal-body">
+            <!-- Form to Add User -->
+            <form action="/add" method="POST" class="user-form">
+                <div class="input-group">
+                    <label for="name">C:\Users\Name> </label>
+                    <input type="text" id="name" name="name" required placeholder="Enter name..." autocomplete="off">
+                </div>
+                <div class="input-group">
+                    <label for="email">C:\Users\Email> </label>
+                    <input type="email" id="email" name="email" required placeholder="Enter email..." autocomplete="off">
+                </div>
+                <button type="submit" class="btn-submit">EXECUTE INSERT</button>
+            </form>
+
+            <hr class="terminal-hr">
+
+            <!-- DB Table View -->
+            <h3>[ DATABASE RECORDS ]</h3>
+            <table class="db-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>NAME</th>
+                        <th>EMAIL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user[0] }}</td>
+                        <td>{{ user[1] }}</td>
+                        <td>{{ user[2] }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="3" style="text-align: center; color: #888;">No records found. Database is empty.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>
