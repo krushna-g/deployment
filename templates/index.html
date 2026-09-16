@@ -3,61 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terminal DB View</title>
+    <title>Trading Mindset Journal</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+    <div class="page-shell">
+        <header class="topbar">
+            <div>
+                <p class="eyebrow">Trading Mindset</p>
+                <h1>Daily Profit & Discipline Log</h1>
+            </div>
+            <div class="focus-pill">
+                <span>Core rule</span>
+                <strong>Execution &gt; Emotion</strong>
+            </div>
+        </header>
 
-    <div class="terminal-box">
-        <div class="terminal-header">
-            <span class="dot red"></span>
-            <span class="dot yellow"></span>
-            <span class="dot green"></span>
-            <span class="title">Database_Terminal_v1.0.exe</span>
-        </div>
-        
-        <div class="terminal-body">
-            <!-- Form to Add User -->
-            <form action="/add" method="POST" class="user-form">
-                <div class="input-group">
-                    <label for="name">C:\Users\Name> </label>
-                    <input type="text" id="name" name="name" required placeholder="Enter name..." autocomplete="off">
+        <section class="stats-grid">
+            <div class="stat-card highlight">
+                <span>Total P/L</span>
+                <strong class="money {% if total_pl >= 0 %}positive{% else %}negative{% endif %}">$ {{ '%.2f'|format(total_pl) }}</strong>
+            </div>
+            <div class="stat-card">
+                <span>Winning days</span>
+                <strong>{{ positive_days }}</strong>
+            </div>
+            <div class="stat-card">
+                <span>Loss days</span>
+                <strong>{{ negative_days }}</strong>
+            </div>
+        </section>
+
+        <main class="content-grid">
+            <section class="panel form-panel">
+                <h2>Add Daily Trading Note</h2>
+                <form action="/add" method="POST" class="journal-form">
+                    <div class="field-row two-columns">
+                        <label>
+                            <span>Date</span>
+                            <input type="date" name="entry_date" required>
+                        </label>
+                        <label>
+                            <span>Symbol</span>
+                            <input type="text" name="symbol" placeholder="AAPL, EURUSD..." required>
+                        </label>
+                    </div>
+
+                    <label>
+                        <span>Trade Setup</span>
+                        <input type="text" name="setup" placeholder="Breakout, reversal, trend continuation..." required>
+                    </label>
+
+                    <label>
+                        <span>Profit / Loss</span>
+                        <input type="number" step="0.01" name="profit_loss" placeholder="Example: 150.00" required>
+                    </label>
+
+                    <label>
+                        <span>Mistakes</span>
+                        <textarea name="mistakes" rows="3" placeholder="What wrong decision did I make today?"></textarea>
+                    </label>
+
+                    <label>
+                        <span>Lesson</span>
+                        <textarea name="lesson" rows="3" placeholder="What did I learn from the trade?"></textarea>
+                    </label>
+
+                    <label>
+                        <span>Mindset</span>
+                        <textarea name="mindset" rows="3" placeholder="How did I feel before and after this trade?"></textarea>
+                    </label>
+
+                    <label>
+                        <span>Notes</span>
+                        <textarea name="notes" rows="4" placeholder="Daily plan, emotional control, discipline notes..."></textarea>
+                    </label>
+
+                    <button type="submit" class="submit-btn">Save Daily Entry</button>
+                </form>
+            </section>
+
+            <section class="panel entries-panel">
+                <h2>Daily Journal Timeline</h2>
+
+                {% for entry in entries %}
+                <article class="entry-card">
+                    <div class="entry-header">
+                        <div>
+                            <span class="entry-date">{{ entry[1] }}</span>
+                            <h3>{{ entry[2] }}</h3>
+                        </div>
+                        <div class="amount {% if entry[4] >= 0 %}profit{% else %}loss{% endif %}">
+                            {{ '%.2f'|format(entry[4]) }}
+                        </div>
+                    </div>
+
+                    <p><strong>Setup:</strong> {{ entry[3] }}</p>
+                    <p><strong>Mistakes:</strong> {{ entry[5] or 'None noted' }}</p>
+                    <p><strong>Lesson:</strong> {{ entry[6] or 'No lesson recorded' }}</p>
+                    <p><strong>Mindset:</strong> {{ entry[7] or 'No mindset note' }}</p>
+                    <p><strong>Notes:</strong> {{ entry[8] or 'No extra notes' }}</p>
+                </article>
+                {% else %}
+                <div class="empty-state">
+                    <p>No trading notes yet.</p>
+                    <span>Write your first daily entry and start tracking discipline.</span>
                 </div>
-                <div class="input-group">
-                    <label for="email">C:\Users\Email> </label>
-                    <input type="email" id="email" name="email" required placeholder="Enter email..." autocomplete="off">
-                </div>
-                <button type="submit" class="btn-submit">EXECUTE INSERT</button>
-            </form>
-
-            <hr class="terminal-hr">
-
-            <!-- DB Table View -->
-            <h3>[ DATABASE RECORDS ]</h3>
-            <table class="db-table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>NAME</th>
-                        <th>EMAIL</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for user in users %}
-                    <tr>
-                        <td>{{ user[0] }}</td>
-                        <td>{{ user[1] }}</td>
-                        <td>{{ user[2] }}</td>
-                    </tr>
-                    {% else %}
-                    <tr>
-                        <td colspan="3" style="text-align: center; color: #888;">No records found. Database is empty.</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+                {% endfor %}
+            </section>
+        </main>
     </div>
-
 </body>
 </html>
