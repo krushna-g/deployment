@@ -19,11 +19,9 @@ DB_HOST = os.environ.get('DB_HOST', 'localhost')
 DB_NAME = os.environ.get('DB_NAME', 'trading_db')
 DB_USER = os.environ.get('DB_USER', 'trading_user')
 DB_PASSWORD = os.environ.get('DB_PASSWORD', 'trading_pass')
-USE_SQLITE = os.environ.get('USE_SQLITE')
-if USE_SQLITE is None:
-    USE_SQLITE = psycopg2 is None
-else:
-    USE_SQLITE = USE_SQLITE.lower() in {'1', 'true', 'yes', 'on'}
+USE_SQLITE = True
+if os.environ.get('USE_SQLITE') is not None:
+    USE_SQLITE = os.environ.get('USE_SQLITE', '1').lower() in {'1', 'true', 'yes', 'on'}
 
 
 def get_db_connection():
