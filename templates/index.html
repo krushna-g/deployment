@@ -11,11 +11,14 @@
         <header class="topbar">
             <div>
                 <p class="eyebrow">Trading Mindset</p>
-                <h1>Daily Profit & Discipline Log</h1>
+                <h1>Welcome, {{ username }}</h1>
             </div>
-            <div class="focus-pill">
-                <span>Core rule</span>
-                <strong>Execution &gt; Emotion</strong>
+            <div class="top-actions">
+                <div class="focus-pill">
+                    <span>Core rule</span>
+                    <strong>Execution &gt; Emotion</strong>
+                </div>
+                <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
             </div>
         </header>
 
@@ -90,19 +93,19 @@
                 <article class="entry-card">
                     <div class="entry-header">
                         <div>
-                            <span class="entry-date">{{ entry[1] }}</span>
-                            <h3>{{ entry[2] }}</h3>
+                            <span class="entry-date">{{ entry['entry_date'] }}</span>
+                            <h3>{{ entry['symbol'] }}</h3>
                         </div>
-                        <div class="amount {% if entry[4] >= 0 %}profit{% else %}loss{% endif %}">
-                            {{ '%.2f'|format(entry[4]) }}
+                        <div class="amount {% if entry['profit_loss'] >= 0 %}profit{% else %}loss{% endif %}">
+                            {{ '%.2f'|format(entry['profit_loss']) }}
                         </div>
                     </div>
 
-                    <p><strong>Setup:</strong> {{ entry[3] }}</p>
-                    <p><strong>Mistakes:</strong> {{ entry[5] or 'None noted' }}</p>
-                    <p><strong>Lesson:</strong> {{ entry[6] or 'No lesson recorded' }}</p>
-                    <p><strong>Mindset:</strong> {{ entry[7] or 'No mindset note' }}</p>
-                    <p><strong>Notes:</strong> {{ entry[8] or 'No extra notes' }}</p>
+                    <p><strong>Setup:</strong> {{ entry['setup'] }}</p>
+                    <p><strong>Mistakes:</strong> {{ entry['mistakes'] or 'None noted' }}</p>
+                    <p><strong>Lesson:</strong> {{ entry['lesson'] or 'No lesson recorded' }}</p>
+                    <p><strong>Mindset:</strong> {{ entry['mindset'] or 'No mindset note' }}</p>
+                    <p><strong>Notes:</strong> {{ entry['notes'] or 'No extra notes' }}</p>
                 </article>
                 {% else %}
                 <div class="empty-state">

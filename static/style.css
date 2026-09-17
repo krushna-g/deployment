@@ -23,6 +23,12 @@ body {
     margin-bottom: 24px;
 }
 
+.top-actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
 .eyebrow {
     margin: 0 0 8px;
     letter-spacing: 0.12em;
@@ -53,6 +59,87 @@ h1 {
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: #a5f3fc;
+}
+
+.logout-btn,
+.auth-link {
+    display: inline-block;
+    text-decoration: none;
+    color: #07111f;
+    background: linear-gradient(135deg, #f8fafc, #cbd5e1);
+    border-radius: 10px;
+    padding: 11px 14px;
+    font-weight: 700;
+}
+
+.auth-wrapper {
+    max-width: 480px;
+    margin: 60px auto 0;
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    border-radius: 20px;
+    padding: 30px 28px;
+    box-shadow: 0 16px 36px rgba(2, 6, 23, 0.3);
+}
+
+.auth-card {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.auth-card h2 {
+    margin: 0 0 6px;
+    font-size: 2rem;
+}
+
+.auth-card p {
+    margin: 0;
+    color: #cbd5e1;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 8px;
+}
+
+.auth-form input {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(148, 163, 184, 0.3);
+    background: rgba(15, 23, 42, 0.6);
+    color: #f8fafc;
+}
+
+.auth-form button {
+    padding: 12px 14px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: #04120a;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.message {
+    padding: 10px 12px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+}
+
+.message.error {
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid rgba(239, 68, 68, 0.35);
+    color: #fecaca;
+}
+
+.message.success {
+    background: rgba(34, 197, 94, 0.12);
+    border: 1px solid rgba(34, 197, 94, 0.35);
+    color: #bbf7d0;
 }
 
 .stats-grid {
@@ -258,7 +345,8 @@ textarea:focus {
         grid-template-columns: 1fr;
     }
 
-    .topbar {
+    .topbar,
+    .top-actions {
         flex-direction: column;
         align-items: flex-start;
     }
